@@ -16,10 +16,7 @@ public class HotelValidator {
 
         if (hotel.getPersonNumber() <= 0){
             throw new RuntimeException("The number of persons cannot be 0 or negative");
-        }
 
-        if (!errors.equals("")) {
-            throw new RuntimeException(errors);
         }
     }
 

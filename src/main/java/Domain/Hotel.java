@@ -6,7 +6,7 @@ public class Hotel {
 
     private int id, personNumber, roomNumber, dayNumber;
     private double rating;
-    private boolean isleftRoom = false;
+    private boolean leftRoom;
     private String feedback;
 
     public Hotel(int id, int personNumber, int roomNumber, int dayNumber) {
@@ -14,16 +14,16 @@ public class Hotel {
         this.personNumber = personNumber;
         this.roomNumber = roomNumber;
         this.dayNumber = dayNumber;
+        boolean leftRoom = false;
     }
-
-    public Hotel(int id, int personNumber, int roomNumber, int dayNumber, double rating, boolean isleftRoom, String feedback) {
+    public Hotel(int id, int personNumber, int roomNumber, int dayNumber, boolean leftRoom, String feedback, double rating) {
         this.id = id;
         this.personNumber = personNumber;
         this.roomNumber = roomNumber;
         this.dayNumber = dayNumber;
-        this.rating = rating;
-        this.isleftRoom = isleftRoom;
+        this.leftRoom = leftRoom;
         this.feedback = feedback;
+        this.rating = rating;
     }
 
     public int getId() {
@@ -67,11 +67,11 @@ public class Hotel {
     }
 
     public boolean isLeftRoom() {
-        return isleftRoom;
+        return leftRoom;
     }
 
     public void setLeftRoom(boolean leftRoom) {
-        this.isleftRoom = leftRoom;
+        this.leftRoom = leftRoom;
     }
 
     public String getFeedback() {
@@ -82,6 +82,8 @@ public class Hotel {
         this.feedback = feedback;
     }
 
+    public boolean isEmpty() { return false; }
+
     @Override
     public String toString() {
         return "Hotel{" +
@@ -90,7 +92,7 @@ public class Hotel {
                 ", roomNumber=" + roomNumber +
                 ", dayNumber=" + dayNumber +
                 ", rating=" + rating +
-                ", isleftRoom=" + isleftRoom +
+                ", isleftRoom=" + leftRoom +
                 ", feedback='" + feedback + '\'' +
                 '}';
     }

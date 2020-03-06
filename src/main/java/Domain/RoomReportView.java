@@ -1,11 +1,18 @@
 package Domain;
 
-import java.util.ArrayList;
-
 public class RoomReportView {
 
         private int roomNumber;
-        private float ratingAverage;
+
+    @Override
+    public String toString() {
+        return "RoomReportView{" +
+                "roomNumber=" + roomNumber +
+                ", ratingAverage=" + ratingAverage +
+                '}';
+    }
+
+    private float ratingAverage;
 
         public RoomReportView(int roomNumber, float ratingAverage) {
             this.roomNumber = roomNumber;

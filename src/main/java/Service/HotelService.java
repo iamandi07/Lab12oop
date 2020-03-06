@@ -8,55 +8,56 @@ import java.util.*;
 
 public class HotelService {
 
-    private HotelRepo repository;
+    private HotelRepo repo;
 
-    public HotelService(HotelRepo repository) {
-        this.repository = repository;
+    public HotelService(HotelRepo repo) {
+        this.repo = repo;
     }
 
     public void enterHotel(int id, int personNumber, int roomNumber, int dayNumber) {
 
         Hotel hotel = new Hotel (id, personNumber, roomNumber, dayNumber);
-        List<Hotel> rooms = repository.getAll();
+        List<Hotel> rooms = repo.getAll();
         for (Hotel c : rooms) {
             if (c.getRoomNumber() == roomNumber && !c.isLeftRoom()) {
                 throw new RuntimeException("That room is already taken by another guess!");
             }
         }
-        repository.add(hotel);
+        repo.add(hotel);
     }
 
     public void leaveRoom(int roomNumber, String feedback, double rating) {
 
-        List<Hotel> hotels = repository.getAll();
-        boolean flag = false;
-
-        for (Hotel c : hotels) {
-            if (c.getRoomNumber() == roomNumber && !c.isLeftRoom()) {
-                flag = true;
-                c.setFeedback(feedback);
-                c.setRating(rating);
-                c.setLeftRoom(false);
-                return;
+        Hotel roomNumber1 = null;
+        List<Hotel> hotels = repo.getAll();
+        for (Hotel hotel : hotels) {
+            if (hotel.getRoomNumber() == roomNumber && !hotel.isLeftRoom()) {
+                roomNumber1 = hotel;
             }
         }
-        if (flag == true) {
-            //do nothing
-        } else {
-            throw new RuntimeException("The room was not booked");
+        if (roomNumber1 != null) {
+            roomNumber1.setFeedback(feedback);
+            roomNumber1.setRating(rating);
+            roomNumber1.setLeftRoom(true);
+            repo.update(roomNumber1);
         }
-    }
+        else {
+            throw new RuntimeException("There is no room with the given numebr");
+        }
+        }
 
     public List<Hotel> getAll(){
-        return repository.getAll();
+        return repo.getAll();
     }
 
-    public List<RoomReportView> getRoomsReport() {
+    public List<RoomReportView> getRoomNumber() {
 
         List<RoomReportView> results = new ArrayList<>();
-        HashMap<Integer, List<Double>> roomRatings = new HashMap<>();
-        for (Hotel c : repository.getAll()) {
-            if (!c.isLeftRoom()) {
+
+        Map<Integer, List<Double>> roomRatings = new HashMap<>();
+
+        for (Hotel c : repo.getAll()) {
+            if (c.isLeftRoom()) {
             int room = c.getRoomNumber();
             double rating = c.getRating();
 
@@ -69,9 +70,9 @@ public class HotelService {
             }
         }
 
-        for (int no : roomRatings.keySet()) {
+        for (Integer no : roomRatings.keySet()) {
             List<Double> ratings = roomRatings.get(no);
-            int average = 0;
+            float average = 0;
             for (double r : ratings) {
                 average += r;
             }

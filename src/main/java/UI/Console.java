@@ -4,6 +4,7 @@ import Domain.Hotel;
 import Domain.RoomReportView;
 import Service.HotelService;
 
+import java.security.KeyException;
 import java.util.Scanner;
 
 public class Console {
@@ -35,7 +36,7 @@ public class Console {
                 handleEntry();
             } else if (option.equals("2")) {
                 handleExit();
-            } else if (option.equals("3")) {
+            } else if (option.equals("b")) {
                 handleReport();
             } else if (option.equals("a")) {
                 handleShowAll();
@@ -75,17 +76,17 @@ public class Console {
 
             service.leaveRoom(roomNumber, feedback, rating);
             System.out.println("Guest left hotel successfully!");
-        } catch (RuntimeException rex) {
+        } catch (RuntimeException runtimeException) {
             System.out.println("We have errors:");
-            System.out.println(rex.getMessage());
+            System.out.println(runtimeException.getMessage());
             
         }
     }
 
     private void handleReport() {
 
-        for (RoomReportView roomReport : service.getRoomsReport()) {
-            System.out.println(String.format("%d %f", roomReport.getRoomNumber(), roomReport.getRatingAverage()));
+        for (RoomReportView roomReport : service.getRoomNumber()) {
+            System.out.println(roomReport);
         }
     }
 

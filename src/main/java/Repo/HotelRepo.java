@@ -15,29 +15,30 @@ public class HotelRepo {
 
     public HotelRepo(HotelValidator validator) {
         this.validator = validator;
-        }
+    }
 
     public void add(Hotel hotel) {
         if (hotels.containsKey(hotel.getId())) {
             throw new RuntimeException("The reg number with that ID already exists!");
-            }
+        }
 
         validator.validate(hotel);
-        hotel.isLeftRoom();
         hotels.put(hotel.getId(), hotel);
+    }
+
+
+
+    public List<Hotel> getAll() {
+        return new ArrayList<>(hotels.values());
+    }
+
+
+    public void update(Hotel hotel)  {
+        if (!hotels.containsKey(hotel.getId())) {
+            throw new RuntimeException("The entry ID does not exist!");
         }
-
-    public void update(Hotel hotel) {
-
-        if (hotels.containsKey(hotel.getRoomNumber())) {
-            throw new RuntimeException("There is no reg number with the given ID!");
-        }
-
         validator.validate(hotel);
-        hotels.put(hotel.getRoomNumber(), hotel);
-        }
+        hotels.put(hotel.getId(), hotel);
+    }
 
-        public List<Hotel> getAll() {
-            return new ArrayList<>(hotels.values());
-        }
 }
